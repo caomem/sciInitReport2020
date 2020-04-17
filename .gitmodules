@@ -1,0 +1,3 @@
+[submodule "secGrafos"]
+	path = secGrafos
+	url = https://github.com/caomem/secGrafos
