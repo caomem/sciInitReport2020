@@ -9,8 +9,7 @@ Para mais informações sobre o projeto de pesquisa, consultar o arquivo “pibi
 
 1. [x] Teoria de Grafos
 2. [ ] Geometria de Distancias
-3. [ ] Robos móveis
-4. [ ] Como medir distancias
+3. [ ] Robos móveis e Como medir distancias
 5. [ ] Protótipo
 6. [ ] Modelagem matemática
 7. [ ] Geometria Mínima Relacionada ao Problema
