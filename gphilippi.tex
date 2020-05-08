@@ -24,43 +24,115 @@
 \newtheorem{definicao}{Definição}[section]
 \newtheorem{teorema}{Teorema}[section]
 
-\title{Titulo Legal}
-\author{Guilherme Philippi}
+\title{Disposição de Robôs Móveis no espaço Euclidiano 3D: uma aplicação de Geometria de Distâncias}
+\author{Guilherme Philippi\Mark{*}, orientado por Felipe Delfini Caetano Fidalgo\Mark{\dagger}\\Campus Blumenau\\Universidade Federal de Santa Catarina\\UFSC
+	\\guilherme.philippi@grad.ufsc.br\Mark{*}, felipe.fidalgo@ufsc.br\Mark{\dagger}}
 \begin{document}
-\maketitle
-\tableofcontents
-
-\section{Introdução}
-
-Este relatório tem como objetivo apresentar soluções de exercícios envolvendo grafos.
-
-Utilizou-se o software PIPE (Platform Independent Petri net Editor) \cite{dias2007ferramentas} para modelar e simular as soluções propostas, assim como segue na próxima seção.
-
-\section{Desenvolvimento}
-Descrever de forma mais detalhada o problema.
-Apresentar a solução proposta pela equipe.
-Discorrer sobre a solução (por exemplo, explicar com detalhes os pontos mais
-importantes).
-
-\begin{figure}[H]
+	\begin{titlepage}
+		\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+		\center % Center everything on the page
+		%----------------------------------------------------------------------------------------
+		%	HEADING SECTIONS
+		%----------------------------------------------------------------------------------------
+		\begin{center}
+			\includegraphics[scale=0.22]{logoufsc.jpg}
+		\end{center}
+		\vspace{1cm}
+		
+		\textsc{\LARGE \hspace{-0.17cm}Universidade Federal de Santa Catarina}\\[0.5cm] % Name of your university/college
+		{\Large Centro de Blumenau \\ Departamento de Matemática}\\[1.5cm] % Major heading such as course name
+		\textsc{\Large PIBIC \\ Relatório Final \vspace{1.5cm}  \\ }{\large Geometria de Distâncias e Álgebras Geométricas: novas perspectivas geométricas, computacionais e aplicações}\\[2.0cm] % Minor heading such as course title
+		
+		%\textsc{\LARGE Universidade Federal de Santa Catarina}\\[0.5cm] % Name of your university/college
+		%{\Large Centro de Blumenau \\ Departamento de Matemática}\\[1.5cm] % Major heading such as course name
+		%\textsc{\Large PIBIC \\ Programa Institucional de Bolsas de Iniciação Científica \vspace{1.5cm} \\ {\bf PROJETO DE PESQUISA}}\\[2.0cm] % Minor heading such as course title
+		
+		%----------------------------------------------------------------------------------------
+		%	TITLE SECTION
+		%----------------------------------------------------------------------------------------
+		
+		\HRule \\[0.4cm]
+		{ \LARGE \bfseries \textbf{Disposição de Robôs Móveis no espaço Euclidiano 3D: uma aplicação de Geometria de Distâncias}} \\ [0.4cm] % Title of your document
+		\HRule \\[2cm]
+		
+		%----------------------------------------------------------------------------------------
+		%	AUTHOR SECTION
+		%----------------------------------------------------------------------------------------
+		
+		\begin{minipage}{1\textwidth}
+			\begin{center} \large
+				Guilherme Philippi (g.philippi@grad.ufsc.br),
+				\vspace{0.5cm}
+				\\
+				\underline{\textsc{Orientador:}} \vspace{0.2cm}
+				Felipe Delfini Caetano Fidalgo (felipe.fidalgo@ufsc.br).
+			\end{center}
+		\end{minipage} \\[2cm]
+		
+		
+		{\large \today} % Date, change the \today to a set date if you want to be precise
+		
+		
+		\vfill % Fill the rest of the page with whitespace
+		
+	\end{titlepage}
+	
+	
+	\newpage
+	\tableofcontents
+	\newpage
+	
 	\begin{center}
-		\includegraphics[width=0.4\linewidth]{img.png}
+		\large
+		\textbf{Abstract}
 	\end{center}
-	\caption{Transformação linear composta BA}
-	\label{fig:compfunc}
-\end{figure}
+	
+	
+	In this paper, we study the Discretizable Molecular Distance Geometry Problem (DMDGP) applied to proteins, as well as the necessary tools for its comprehension, going from the graph theory to biomolecular structures. We, also, deal with some recent results on the ordering of a protein graph that composes the problem. The text concludes with a study of the algorithm described in the literature to solve the problem efficiently and a brief section of computer simulations.
+	
+	\textbf{Keywords:} DMDGP, Distance geometry, Optimization.
+	
+	
+	\vspace{2cm}	
+	\begin{center}
+		\large
+		\textbf{Resumo}
+	\end{center}
+	
+	Neste trabalho, foram estudados o Discretizable Molecular Distance Geometry Problem (DMDGP) aplicado as proteínas, bem como as ferramentas necessárias para sua compreensão, passando da teoria de grafos às estruturas biomoleculares. Também lidamos com alguns resultados recentes sobre a ordenação do grafo da proteína que compõe o problema. O texto se encerra com um estudo sobre o algoritmo descrito na literatura para solucionar o problema de forma eficiente e uma brevê seção de simulações computacionais.
+	
+	\textbf{Palavras-chave:} DMDGP, Geometria de Distâncias, Otimização.
+	
+	
+	\newpage
+	\section{Introdução}
+	Existe uma relação muito forte entre a forma geométrica das moléculas orgânicas e suas funções em organismos vivos \cite{bioquimicaLehninger}. Outrora, em pesquisas sobre a molécula de DNA (ácido desoxirribonucleico), descobriu-se que essa era parte fundamental da produção de um dos pilares para a vida: a proteína. Esta é a estrutura básica que utilizamos para organizar nossas moléculas, gerando informação, ao possibilitarem um mecanismo funcional natural para a vida. Por exemplo, podemos citar o seu papel no transporte de oxigênio (hemoglobina), na proteção do corpo contra organismos patogênicos (imunoglobulina), com a catalização de reações químicas (apoenzima), além de outras inúmeras funções primordiais no nosso organismo \cite{fidalgotese}.
+	
+	Por conta dessa motivação tem-se esforços como o de Kurt Wüthrich, que propôs que utilizássemos experimentos de \textit{Ressonância Magnética Nuclear}
+	(RMN) para calcular a estrutura tridimensional de uma molécula de proteína (que lhe rendeu o premio Nobel da Química em 2002 \cite{RMNproteinWrutrich}). Porém, a RMN não tem como resultado direto a estrutura tridimensional de uma proteína, mas sim distâncias entre átomos relativamente próximos que compõem a proteína --- com inconvenientes erros associados, pois tratam-se de valores experimentais \cite{carlile:MinimalOrder}.
+	
+	Para podermos calcular a estrutura de uma proteína a partir dessas distâncias, de forma estática, respeitando restrições de outras informações provenientes da física e química, surgira um novo problema na literatura conhecido como \textit{Molecular Distance Geometry Problem} (MDGP), que é uma particularização do \textit{Distance Geometry Problem} (DGP) \cite{carlileGDandAplications}. Tal problema, munido de uma ordem conveniente para percorrer seus átomos (que garante uma discretização do espaço de buscas por soluções), pode ser discretizado, gerando o \textit{Discretizable MDGP} (DMDGP).
+	
+	Este último trata-se do nosso problema fundamental, que será melhor definido no Capítulo ~\ref{sec:dmdgp}. Para podermos compreendê-lo, introduzimos a teoria de grafos (no Capítulo ~\ref{sec:grafos}), seguido das principais informações sobre as estruturas biomoleculares das proteínas (Capítulo ~\ref{sec:biomol}). Por último, apresentamos o principal algorítimo responsável pela solução do problema (Capítulo ~\ref{sec:bp}), contendo algumas simulações computacionais.
+	
+	A revisão bibliográfica completa pode ser encontrados no fim do documento, sendo devidamente citada durante o texto. 
+	
+	\newpage
+	
+	\input{secGrafos/gphilippi.tex}
+	
+	\newpage
+	
+	\input{secGD/gphilippi.tex}
 
-Atenção: Se mais de uma ou atividade foi realizada no laboratório repetir a sequência
-anterior (da Seção 3) para cada atividade.
-
-\section{Considerações Finais}
-Apresentar as considerações finais sobre o trabalho. Se o objetivo foi alcançado ou não,
-o que foi aprendido, dificuldades encontradas, etc.
-
-\phantomsection
-\addcontentsline{toc}{section}{Referências}
-
-\bibliographystyle{unsrt}
-\bibliography{references}
+	\phantomsection
+	\addcontentsline{toc}{section}{Referências}
+	
+	\bibliographystyle{unsrt}
+	\bibliography{references}
+	
+	\newpage
+	\appendix
+	\input{secGD/apendices.tex}
 
 \end{document}
