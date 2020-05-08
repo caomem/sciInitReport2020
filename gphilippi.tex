@@ -119,12 +119,68 @@
 	
 	\newpage
 	
+	\phantomsection
+	\addcontentsline{toc}{section}{Materiais e Métodos}
+	\section*{Materiais e Métodos}
+	No que se segue, apresenta-se o estudo desenvolvido neste trabalho.
+	
 	\input{secGrafos/gphilippi.tex}
 	
 	\newpage
 	
 	\input{secGD/gphilippi.tex}
 
+		\newpage
+	\section{Resultados e Discussão \label{sec:disc}}
+	Como vimos, a quantidade de soluções bem como o tempo para resolvê-las está crescendo de forma considerável proporcional a $|V|$. Isso é um problema real caso se queira calcular instâncias reais do problema, pois encontramos com grande facilidade proteínas com $|V|$ da ordem de 2000 no repositório wwPDB.
+	
+	Uma boa proposta para implementações futuras seria um estudo sobre a otimização de memória necessária para implementar o BP. Isso pode ser observado no desenvolvimento do MD-Jeep \cite{mucherino:BP}, uma implementação em C feita por Antonio Mucherino, Leo Liberti e Carlile Lavor em 2010.
+	
+	Uma solução trivial pensada para contornar esse aumento do número de soluções foi tentar manipular o valor de $\varepsilon$, de forma a produzir um filtro manual que diminuísse a quantidade de soluções. Porém, não obtivemos resultados satisfatórios. Pequenas oscilações em torno de um certo valor de $\varepsilon$ (intrínsecos de cada molécula) faziam que, ou os resultados continuassem crescendo, ou não fossem nenhum.
+	
+	Outra alternativa para solucionar esse problema pode ser encontrada estudando as simetrias do DMDGP \cite{fidalgotese} \cite{carlileGDandAplications}. Perceba, nas Tabelas ~\ref{tab:re1} e ~\ref{tab:re2}, que os resultados possuem uma similaridade. Isso se dá devido as simetrias nas soluções de cada ramificação da arvore $T$, pois os resultados são simétricos (espelhados ao plano formado pelos três átomos anteriores \cite{carlileBook31Coloquio}). Com isso, não precisamos buscar por todas as soluções da árvore de busca, pois, tendo uma solução, consegue-se a sua simétrica em tempo linear \cite{fidalgotese}. Isso é implementado em uma variação do BP, chamado \textit{SymBP} \cite{fidalgotese}.
+	
+	Outras otimizações do algorítimo BP também podem ser encontrados na literatura, como uma versão que utiliza um paradigma Dividir e Conquistar \cite{fidalgotese}, onde se constrói uma implementação paralela (Multithreading), que se utiliza das simetrias para produzir vários SymBP em paralelo. Um estudo sobre essas implementações poderiam ser úteis para otimizar nosso algorítimo.
+	
+	\newpage
+	\section{Considerações Finais}
+	Com isso concluímos um estudo elementar sobre o Discretizable Molecular Distance Geometry Problem, tal qual teve como resultado principal o software HCProt. 
+	
+	Nos cabe, nesse momento, voltarmos para as propostas levantadas internamente no início do projeto e verificar se elas foram cumpridas. Seguem o conjunto de objetivos específicos desse projeto, munidos de breve conclusão:
+	
+	\begin{enumerate}
+		\item Entender as estruturas básicas de proteínas:
+		
+		Este fora feito de forma intensa, resultando no Capítulo ~\ref{sec:biomol} deste documento;
+		
+		\item Relacionar-se eficientemente com o PDB (\emph{Protein Data Bank}) - como extrair os dados computacionais que servirão de insumos:
+		
+		Apresentou-se este repositório junto do Capítulo ~\ref{sec:biomol}, devido sua proximidade temática. Vale mencionar que lá também fora apresentado o software HCProt, implementado pelo autor deste documento, que visa automatizar o processo de extração dos dados de distâncias do repositório PDB;
+		
+		\item Compreender o DMDGP e sua estrutura de ordenamento dos vértices:
+		
+		Este objetivo se resume ao Capítulo ~\ref{sec:dmdgp}. Especialmente no estudo da ordenação HC, feita no fim do capítulo;
+		
+		\item Conhecer todos os passos do algoritmo BP:
+		
+		Apresentado no Capítulo ~\ref{sec:bp}, onde estudou-se todos os passos referentes a esse algorítimo: Inicialização, \textit{branching} e \textit{pruning};
+		
+		\item Simular, computacionalmente, o algoritmo BP com instâncias artificialmente geradas, como descrito na Literatura, dominando cada passo utilizado:
+		
+		Feito no fim do capítulo ~\ref{sec:bp}, com resultados condizentes com os esperados;
+		
+		\item Aplicar o Algoritmo BP estudado em estruturas proteicas como instâncias reais do problema:
+		
+		Não foi possível aplicar o BP a estás instâncias. Há uma pequena discussão, no Capitulo ~\ref{sec:disc}, sobre essa situação.
+		
+		Vale lembrar, porém, que uma parte importante desse resultado foi desenvolvido ao criar o software HCProt, possibilitando a extração dos dados de moléculas reais do repositório PDB, bem como a ordenação dos átomos, discretizando o problema.
+	\end{enumerate}
+	
+	Como implementações futuras, deseja-se estudar mais sobre as distâncias intervalares que aparecem com a ordenação HC \cite{carlile:MinimalOrder} (detalhe este que não fora considerado na nossa implementação). Esses intervalos ocorrem justamente porque o HC order foi pensado de forma que a fase de \textit{branching} do algorítimo BP só ocorra com distâncias extras advindas da RMN \cite{carlile:MinimalOrder} --- que, como vimos, são dados intervalares (Capítulo ~\ref{sec:RMN}). Uma ferramenta que tem demonstrado potencial para auxiliar nessa passagem é a \textit{Geometria Conforme} \cite{carlileBook31Coloquio}.
+	
+	Também deseja-se poder fazer um novo estudo do problema envolvendo a \textit{Álgebra dos Quatérnios}, tentando otimizar o calculo que hoje envolve a matriz $B_i$, pois estes já demonstraram conter operações mais eficientes que as matriciais para realizar rotações \cite{fidalgotese}.
+	
+	\newpage
 	\phantomsection
 	\addcontentsline{toc}{section}{Referências}
 	
