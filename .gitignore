@@ -277,3 +277,6 @@ TSWLatexianTemp*
 
 # Windows files
 *.ini
+
+# Fuse files
+**.fuse_hidden*
