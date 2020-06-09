@@ -106,14 +106,14 @@
 	
 	\newpage
 	\section{Introdução}
-	Existe uma relação muito forte entre a forma geométrica das moléculas orgânicas e suas funções em organismos vivos \cite{bioquimicaLehninger}. Outrora, em pesquisas sobre a molécula de DNA (ácido desoxirribonucleico), descobriu-se que essa era parte fundamental da produção de um dos pilares para a vida: a proteína. Esta é a estrutura básica que utilizamos para organizar nossas moléculas, gerando informação, ao possibilitarem um mecanismo funcional natural para a vida. Por exemplo, podemos citar o seu papel no transporte de oxigênio (hemoglobina), na proteção do corpo contra organismos patogênicos (imunoglobulina), com a catalização de reações químicas (apoenzima), além de outras inúmeras funções primordiais no nosso organismo \cite{fidalgotese}.
+	Existe uma relação muito forte entre a forma geométrica das moléculas orgânicas e suas funções em organismos vivos. Outrora, em pesquisas sobre a molécula de DNA (ácido desoxirribonucleico), descobriu-se que essa era parte fundamental da produção de um dos pilares para a vida: a proteína. Esta é a estrutura básica que utilizamos para organizar nossas moléculas, gerando informação, ao possibilitarem um mecanismo funcional natural para a vida. Por exemplo, podemos citar o seu papel no transporte de oxigênio (hemoglobina), na proteção do corpo contra organismos patogênicos (imunoglobulina), com a catalização de reações químicas (apoenzima), além de outras inúmeras funções primordiais no nosso organismo.
 	
 	Por conta dessa motivação tem-se esforços como o de Kurt Wüthrich, que propôs que utilizássemos experimentos de \textit{Ressonância Magnética Nuclear}
-	(RMN) para calcular a estrutura tridimensional de uma molécula de proteína (que lhe rendeu o premio Nobel da Química em 2002 \cite{RMNproteinWrutrich}). Porém, a RMN não tem como resultado direto a estrutura tridimensional de uma proteína, mas sim distâncias entre átomos relativamente próximos que compõem a proteína --- com inconvenientes erros associados, pois tratam-se de valores experimentais \cite{carlile:MinimalOrder}.
+	(RMN) para calcular a estrutura tridimensional de uma molécula de proteína (que lhe rendeu o premio Nobel da Química em 2002). Porém, a RMN não tem como resultado direto a estrutura tridimensional de uma proteína, mas sim distâncias entre átomos relativamente próximos que compõem a proteína --- com inconvenientes erros associados, pois tratam-se de valores experimentais.
 	
-	Para podermos calcular a estrutura de uma proteína a partir dessas distâncias, de forma estática, respeitando restrições de outras informações provenientes da física e química, surgira um novo problema na literatura conhecido como \textit{Molecular Distance Geometry Problem} (MDGP), que é uma particularização do \textit{Distance Geometry Problem} (DGP) \cite{carlileGDandAplications}. Tal problema, munido de uma ordem conveniente para percorrer seus átomos (que garante uma discretização do espaço de buscas por soluções), pode ser discretizado, gerando o \textit{Discretizable MDGP} (DMDGP).
+	Para podermos calcular a estrutura de uma proteína a partir dessas distâncias, de forma estática, respeitando restrições de outras informações provenientes da física e química, surgira um novo problema na literatura conhecido como \textit{Molecular Distance Geometry Problem} (MDGP), que é uma particularização do \textit{Distance Geometry Problem} (DGP). Tal problema, munido de uma ordem conveniente para percorrer seus átomos (que garante uma discretização do espaço de buscas por soluções), pode ser discretizado, gerando o \textit{Discretizable MDGP} (DMDGP).
 	
-	Este último trata-se do nosso problema fundamental, que será melhor definido no Capítulo ~\ref{sec:dmdgp}. Para podermos compreendê-lo, introduzimos a teoria de grafos (no Capítulo ~\ref{sec:grafos}), seguido das principais informações sobre as estruturas biomoleculares das proteínas (Capítulo ~\ref{sec:biomol}). Por último, apresentamos o principal algorítimo responsável pela solução do problema (Capítulo ~\ref{sec:bp}), contendo algumas simulações computacionais.
+	Este último trata-se do nosso problema fundamental, que será melhor definido no Capítulo. Para podermos compreendê-lo, introduzimos a teoria de grafos (no Capítulo ~\ref{sec:grafos}), seguido das principais informações sobre as estruturas biomoleculares das proteínas (Capítulo ). Por último, apresentamos o principal algorítimo responsável pela solução do problema (Capítulo), contendo algumas simulações computacionais.
 	
 	A revisão bibliográfica completa pode ser encontrados no fim do documento, sendo devidamente citada durante o texto. 
 	
@@ -134,13 +134,13 @@
 	\section{Resultados e Discussão \label{sec:disc}}
 	Como vimos, a quantidade de soluções bem como o tempo para resolvê-las está crescendo de forma considerável proporcional a $|V|$. Isso é um problema real caso se queira calcular instâncias reais do problema, pois encontramos com grande facilidade proteínas com $|V|$ da ordem de 2000 no repositório wwPDB.
 	
-	Uma boa proposta para implementações futuras seria um estudo sobre a otimização de memória necessária para implementar o BP. Isso pode ser observado no desenvolvimento do MD-Jeep \cite{mucherino:BP}, uma implementação em C feita por Antonio Mucherino, Leo Liberti e Carlile Lavor em 2010.
+	Uma boa proposta para implementações futuras seria um estudo sobre a otimização de memória necessária para implementar o BP. Isso pode ser observado no desenvolvimento do MD-Jeep, uma implementação em C feita por Antonio Mucherino, Leo Liberti e Carlile Lavor em 2010.
 	
 	Uma solução trivial pensada para contornar esse aumento do número de soluções foi tentar manipular o valor de $\varepsilon$, de forma a produzir um filtro manual que diminuísse a quantidade de soluções. Porém, não obtivemos resultados satisfatórios. Pequenas oscilações em torno de um certo valor de $\varepsilon$ (intrínsecos de cada molécula) faziam que, ou os resultados continuassem crescendo, ou não fossem nenhum.
 	
-	Outra alternativa para solucionar esse problema pode ser encontrada estudando as simetrias do DMDGP \cite{fidalgotese} \cite{carlileGDandAplications}. Perceba, nas Tabelas ~\ref{tab:re1} e ~\ref{tab:re2}, que os resultados possuem uma similaridade. Isso se dá devido as simetrias nas soluções de cada ramificação da arvore $T$, pois os resultados são simétricos (espelhados ao plano formado pelos três átomos anteriores \cite{carlileBook31Coloquio}). Com isso, não precisamos buscar por todas as soluções da árvore de busca, pois, tendo uma solução, consegue-se a sua simétrica em tempo linear \cite{fidalgotese}. Isso é implementado em uma variação do BP, chamado \textit{SymBP} \cite{fidalgotese}.
+	Outra alternativa para solucionar esse problema pode ser encontrada estudando as simetrias do DMDGP. Perceba, nas Tabelas e, que os resultados possuem uma similaridade. Isso se dá devido as simetrias nas soluções de cada ramificação da arvore $T$, pois os resultados são simétricos (espelhados ao plano formado pelos três átomos anteriores). Com isso, não precisamos buscar por todas as soluções da árvore de busca, pois, tendo uma solução, consegue-se a sua simétrica em tempo linear. Isso é implementado em uma variação do BP, chamado \textit{SymBP}.
 	
-	Outras otimizações do algorítimo BP também podem ser encontrados na literatura, como uma versão que utiliza um paradigma Dividir e Conquistar \cite{fidalgotese}, onde se constrói uma implementação paralela (Multithreading), que se utiliza das simetrias para produzir vários SymBP em paralelo. Um estudo sobre essas implementações poderiam ser úteis para otimizar nosso algorítimo.
+	Outras otimizações do algorítimo BP também podem ser encontrados na literatura, como uma versão que utiliza um paradigma Dividir e Conquistar, onde se constrói uma implementação paralela (Multithreading), que se utiliza das simetrias para produzir vários SymBP em paralelo. Um estudo sobre essas implementações poderiam ser úteis para otimizar nosso algorítimo.
 	
 	\newpage
 	\section{Considerações Finais}
@@ -151,34 +151,34 @@
 	\begin{enumerate}
 		\item Entender as estruturas básicas de proteínas:
 		
-		Este fora feito de forma intensa, resultando no Capítulo ~\ref{sec:biomol} deste documento;
+		Este fora feito de forma intensa, resultando no Capítulo deste documento;
 		
 		\item Relacionar-se eficientemente com o PDB (\emph{Protein Data Bank}) - como extrair os dados computacionais que servirão de insumos:
 		
-		Apresentou-se este repositório junto do Capítulo ~\ref{sec:biomol}, devido sua proximidade temática. Vale mencionar que lá também fora apresentado o software HCProt, implementado pelo autor deste documento, que visa automatizar o processo de extração dos dados de distâncias do repositório PDB;
+		Apresentou-se este repositório junto do Capítulo, devido sua proximidade temática. Vale mencionar que lá também fora apresentado o software HCProt, implementado pelo autor deste documento, que visa automatizar o processo de extração dos dados de distâncias do repositório PDB;
 		
 		\item Compreender o DMDGP e sua estrutura de ordenamento dos vértices:
 		
-		Este objetivo se resume ao Capítulo ~\ref{sec:dmdgp}. Especialmente no estudo da ordenação HC, feita no fim do capítulo;
+		Este objetivo se resume ao Capítulo. Especialmente no estudo da ordenação HC, feita no fim do capítulo;
 		
 		\item Conhecer todos os passos do algoritmo BP:
 		
-		Apresentado no Capítulo ~\ref{sec:bp}, onde estudou-se todos os passos referentes a esse algorítimo: Inicialização, \textit{branching} e \textit{pruning};
+		Apresentado no Capítulo, onde estudou-se todos os passos referentes a esse algorítimo: Inicialização, \textit{branching} e \textit{pruning};
 		
 		\item Simular, computacionalmente, o algoritmo BP com instâncias artificialmente geradas, como descrito na Literatura, dominando cada passo utilizado:
 		
-		Feito no fim do capítulo ~\ref{sec:bp}, com resultados condizentes com os esperados;
+		Feito no fim do capítulo, com resultados condizentes com os esperados;
 		
 		\item Aplicar o Algoritmo BP estudado em estruturas proteicas como instâncias reais do problema:
 		
-		Não foi possível aplicar o BP a estás instâncias. Há uma pequena discussão, no Capitulo ~\ref{sec:disc}, sobre essa situação.
+		Não foi possível aplicar o BP a estás instâncias. Há uma pequena discussão, no Capitulo, sobre essa situação.
 		
 		Vale lembrar, porém, que uma parte importante desse resultado foi desenvolvido ao criar o software HCProt, possibilitando a extração dos dados de moléculas reais do repositório PDB, bem como a ordenação dos átomos, discretizando o problema.
 	\end{enumerate}
 	
-	Como implementações futuras, deseja-se estudar mais sobre as distâncias intervalares que aparecem com a ordenação HC \cite{carlile:MinimalOrder} (detalhe este que não fora considerado na nossa implementação). Esses intervalos ocorrem justamente porque o HC order foi pensado de forma que a fase de \textit{branching} do algorítimo BP só ocorra com distâncias extras advindas da RMN \cite{carlile:MinimalOrder} --- que, como vimos, são dados intervalares (Capítulo ~\ref{sec:RMN}). Uma ferramenta que tem demonstrado potencial para auxiliar nessa passagem é a \textit{Geometria Conforme} \cite{carlileBook31Coloquio}.
+	Como implementações futuras, deseja-se estudar mais sobre as distâncias intervalares que aparecem com a ordenação HC (detalhe este que não fora considerado na nossa implementação). Esses intervalos ocorrem justamente porque o HC order foi pensado de forma que a fase de \textit{branching} do algorítimo BP só ocorra com distâncias extras advindas da RMN --- que, como vimos, são dados intervalares (Capítulo). Uma ferramenta que tem demonstrado potencial para auxiliar nessa passagem é a \textit{Geometria Conforme}.
 	
-	Também deseja-se poder fazer um novo estudo do problema envolvendo a \textit{Álgebra dos Quatérnios}, tentando otimizar o calculo que hoje envolve a matriz $B_i$, pois estes já demonstraram conter operações mais eficientes que as matriciais para realizar rotações \cite{fidalgotese}.
+	Também deseja-se poder fazer um novo estudo do problema envolvendo a \textit{Álgebra dos Quatérnios}, tentando otimizar o calculo que hoje envolve a matriz $B_i$, pois estes já demonstraram conter operações mais eficientes que as matriciais para realizar rotações.
 	
 	\newpage
 	\phantomsection
