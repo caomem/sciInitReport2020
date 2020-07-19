@@ -4,3 +4,6 @@
 [submodule "secGD"]
 	path = secGD
 	url = https://github.com/caomem/secGD
+[submodule "secRobosMoveis"]
+	path = secRobosMoveis
+	url = https://github.com/caomem/secRobosMoveis
