@@ -113,15 +113,16 @@
 	Percebe-se uma tendencia de mercado em se adotar sistemas autônomos móveis para realizar funções que dependem de um grande número de máquinas, como o controle do estoque em um armazém, um sistema de entrega ou o cultivo e tratamento de grandes áreas de plantio \cite{mobileRobotsCook}. O estudo da localização de robôs móveis é vasta na literatura \cite{eren2004rigidity, mobileRobotsTzafestas}, o que demonstra a importância deste tema. Qualquer solução de engenharia móvel, seja autônoma ou não, precisa definir uma forma de localizar seu objeto de estudo. Por conta disso, no decorrer desse texto, estuda-se algumas soluções envolvendo Geometria de Distâncias para a obtenção de localização.
 	\\
 	
-	A Geometria de Distâncias (GD) é uma matéria de interesse relativamente recente da Ciência \cite{carlileGDandAplications}, disposta em uma vasta interseção entre diversas áreas do conhecimento. Em suma, ela se preocupa com os aspectos geométricos decorrentes dos objetos que estão dispostos em algum espaço e possuam uma relação de distância medível, advindas de origens tão variáveis quanto se queira. Como é o caso de estudo deste texto: distâncias entre robôs móveis com seu meio e, em particular, outros robôs móveis.
+	A Geometria de Distâncias (GD) é uma matéria de interesse relativamente recente da Ciência \cite{carlileGDandAplications}, disposta em uma vasta interseção entre diversas áreas do conhecimento. Em suma, ela se preocupa com os aspectos geométricos decorrentes dos objetos que estão dispostos em algum espaço e possuam uma relação de distância mensurável, advindas de origens tão variáveis quanto se queira. Como é o caso de estudo deste texto: distâncias entre robôs móveis com seu meio e, em particular, outros robôs móveis.
 	\\
 	
-	Para poder relacionar esses distâncias, no que se segue, apresenta-se um estudo sobre a Teoria de Grafos (Seção~\ref{sec:grafos}), que demonstrou-se uma ferramenta importante para GD --- em contraponto à antiga utilização de matrizes de distâncias \cite{carlileGDandAplications}. A seguir, por tanto, na Seção~\ref{sec:GD}, desenvolve-se o problema fundamental deste trabalho a partir da definição de Grafos e faz-se um estudo sobre algorítimos descritos na literatura para solucioná-lo. Na Seção~\ref{sec:robos}, faz-se uma introdução a robótica móvel e apresenta-se um estudo sobre sensoriamento. 
-	
-	O trabalho se encerra com algumas simulações computacionais do problema, na Seção~\ref{sec:disc}, além de discussões envolvendo esses resultados. O texto também contém dois apêndices, podendo serem usados como consulta, caracterizando algumas ferramentas matemáticas utilizadas. 
+	Para poder representar essas distâncias, apresenta-se na Seção~\ref{sec:grafos} um estudo sobre a Teoria de Grafos --- que demonstrou-se uma ferramenta importante para GD, em contraponto à utilização da representação matricial \cite{carlileGDandAplications}. Em seguida, na Seção~\ref{sec:GD}, enuncia-se o problema fundamental deste trabalho utilizando grafos e faz-se um estudo sobre algorítimos descritos na literatura para solucioná-lo.
 	\\
 	
-	A revisão bibliográfica completa pode ser encontrada no fim do documento, sendo devidamente citada durante o texto. 
+	Na última parte deste trabalho há uma introdução à robótica móvel, na Seção~\ref{sec:robos}, onde apresenta-se um estudo sobre os sensores existentes para a obtenção de distâncias, seguidos por algumas simulações computacionais do problema, na Seção~\ref{sec:simulacoes}. Por fim, há discussões envolvendo esses resultados. O texto também contém dois apêndices, podendo serem usados como consulta, o que inclui algumas ferramentas matemáticas utilizadas. 
+	\\
+	
+	Uma revisão bibliográfica completa pode ser encontrada no fim do documento, antes dos apêndices, na Página~\pageref{sec:ref}.
 	
 	\newpage
 	
@@ -236,7 +237,7 @@
 \label{fig:inst}
 \end{figure}
 	
-	\section{Simulações}
+	\section{Simulações \label{sec:simulacoes}}
 	
 	Primeiramente. para gerar instâncias do algorítimo~\ref{alg:realizacaoIterativa}, deve-se usar o algorítimo~\ref{alg:instancia} com $\mathcal{P} = 100$. Assim pode-se garantir a geração de um grafo completo. Criou-se, então, instâncias com tamanhos variados: $n \in \{5, 6, 7,10,15,20,30,40,50,100,200,400,500\}$. A seguir apresenta-se alguns gráficos sobre os resultados.
 	
@@ -398,6 +399,7 @@
 	Também deseja-se fazer estudos sobre geometrias mínimas para o problema, como feito em \cite{wsnlFewAnchors}. Deseja-se verificar um conjunto de condições que restringem o movimento de um robô móvel afim de garantir que este ainda possa ser localizado.
 	
 	\newpage
+	\label{sec:ref}
 	\phantomsection
 	\addcontentsline{toc}{chapter}{Referências Bibliográficas}
 	
