@@ -35,7 +35,7 @@
 		%	HEADING SECTIONS
 		%----------------------------------------------------------------------------------------
 		\begin{center}
-			\includegraphics[scale=0.22]{logoufsc.jpg}
+			\includegraphics[scale=0.22]{figures/logoufsc.jpg}
 		\end{center}
 		\vspace{1cm}
 		
@@ -79,6 +79,7 @@
 	
 	
 	\newpage
+	\vspace{-1cm}
 	\tableofcontents
 	\newpage
 	
@@ -88,9 +89,9 @@
 	\end{center}
 	
 	
-	In this paper, we study the Discretizable Molecular Distance Geometry Problem (DMDGP) applied to proteins, as well as the necessary tools for its comprehension, going from the graph theory to biomolecular structures. We, also, deal with some recent results on the ordering of a protein graph that composes the problem. The text concludes with a study of the algorithm described in the literature to solve the problem efficiently and a brief section of computer simulations.
+	In this work, the Distance Geometry Problem Trilaterative applied to the sensor location problem was studied, as well as the necessary tools for its understanding, going from graph theory to the characteristics of systems involving mobile robotics. An overview of Geometry of Distances was presented, which enabled the correct definition of the problem and polynomial algorithms to solve it. The text ends with an analysis of computer simulations of the problem, using different geometries, as well as an algorithm to generate them.
 	
-	\textbf{Keywords:} DMDGP, Distance geometry, Optimization.
+	\textbf{Keywords:} TDGP, Distance Geometry, Mobile Robotics.
 	
 	
 	\vspace{2cm}	
@@ -99,23 +100,26 @@
 		\textbf{Resumo}
 	\end{center}
 	
-	Neste trabalho, foram estudados o Discretizable Molecular Distance Geometry Problem (DMDGP) aplicado as proteínas, bem como as ferramentas necessárias para sua compreensão, passando da teoria de grafos às estruturas biomoleculares. Também lidamos com alguns resultados recentes sobre a ordenação do grafo da proteína que compõe o problema. O texto se encerra com um estudo sobre o algoritmo descrito na literatura para solucionar o problema de forma eficiente e uma brevê seção de simulações computacionais.
+	Neste trabalho, foram estudados o Trilaterativo Distance Geometry Problem aplicado ao problema de localização de sensores, bem como as ferramentas necessárias para sua compreensão, passando da teoria de grafos às características de sistemas envolvendo robótica móvel. Apresentou-se uma visão geral de Geometria de Distâncias que possibilitou a correta definição do problema e de algorítimos polinomiais para solucioná-lo. O texto se encerra com uma analise de simulações computacionais do problema, utilizando diferentes geometrias, bem como um algorítimo para gerá-las. 
 	
-	\textbf{Palavras-chave:} DMDGP, Geometria de Distâncias, Otimização.
+	\textbf{Palavras-chave:} TDGP, Geometria de Distâncias, Robótica Móvel.
 	
 	
 	\newpage
 	\section{Introdução}
-	Existe uma relação muito forte entre a forma geométrica das moléculas orgânicas e suas funções em organismos vivos. Outrora, em pesquisas sobre a molécula de DNA (ácido desoxirribonucleico), descobriu-se que essa era parte fundamental da produção de um dos pilares para a vida: a proteína. Esta é a estrutura básica que utilizamos para organizar nossas moléculas, gerando informação, ao possibilitarem um mecanismo funcional natural para a vida. Por exemplo, podemos citar o seu papel no transporte de oxigênio (hemoglobina), na proteção do corpo contra organismos patogênicos (imunoglobulina), com a catalização de reações químicas (apoenzima), além de outras inúmeras funções primordiais no nosso organismo.
 	
-	Por conta dessa motivação tem-se esforços como o de Kurt Wüthrich, que propôs que utilizássemos experimentos de \textit{Ressonância Magnética Nuclear}
-	(RMN) para calcular a estrutura tridimensional de uma molécula de proteína (que lhe rendeu o premio Nobel da Química em 2002). Porém, a RMN não tem como resultado direto a estrutura tridimensional de uma proteína, mas sim distâncias entre átomos relativamente próximos que compõem a proteína --- com inconvenientes erros associados, pois tratam-se de valores experimentais.
+	Percebe-se uma tendencia de mercado em se adotar sistemas autônomos móveis para realizar funções que dependem de um grande número de maquinas, como o controle do estoque em um armazém, um sistema de entrega ou o cultivo e tratamento de grandes áreas de plantio \cite{mobileRobotsCook}. O estudo da localização de robôs móveis é vasta na literatura \cite{eren2004rigidity, mobileRobotsTzafestas}, o que demonstra a importância deste tema. Qualquer solução de engenharia móvel, seja autônoma ou não, precisa definir uma forma de localizar seu objeto de estudo. Por conta disso, ao decorrer desse texto apresenta-se soluções envolvendo Geometria de Distâncias como alternativas para a obtenção de localização.
+	\\
 	
-	Para podermos calcular a estrutura de uma proteína a partir dessas distâncias, de forma estática, respeitando restrições de outras informações provenientes da física e química, surgira um novo problema na literatura conhecido como \textit{Molecular Distance Geometry Problem} (MDGP), que é uma particularização do \textit{Distance Geometry Problem} (DGP). Tal problema, munido de uma ordem conveniente para percorrer seus átomos (que garante uma discretização do espaço de buscas por soluções), pode ser discretizado, gerando o \textit{Discretizable MDGP} (DMDGP).
+	A Geometria de Distâncias (GD) é uma matéria de interesse relativamente recente da Ciência \cite{carlileGDandAplications}, disposta em uma vasta interseção entre diversas áreas do conhecimento. Em suma, ela se preocupa com os aspectos geométricos decorrentes dos objetos que estão dispostos em algum espaço e possuam uma relação de distância medível, advindas de origens tão variáveis quanto se queira. Como é o caso de estudo deste texto: distâncias entre robôs móveis com seu meio e, em particular, outros robôs móveis.
+	\\
 	
-	Este último trata-se do nosso problema fundamental, que será melhor definido no Capítulo. Para podermos compreendê-lo, introduzimos a teoria de grafos (no Capítulo ~\ref{sec:grafos}), seguido das principais informações sobre as estruturas biomoleculares das proteínas (Capítulo ). Por último, apresentamos o principal algorítimo responsável pela solução do problema (Capítulo), contendo algumas simulações computacionais.
+	Para poder relacionar esses distâncias, no que se segue, apresenta-se um estudo sobre a Teoria de Grafos (Seção~\ref{sec:grafos}), que demonstrou-se uma ferramenta importante para GD --- em contraponto à antiga utilização de matrizes de distâncias \cite{carlileGDandAplications}. A seguir, por tanto, na Seção~\ref{sec:GD}, desenvolve-se o problema fundamental deste trabalho a partir da definição de Grafos e faz-se um estudo sobre algorítimos descritos na literatura para solucioná-lo. Na Seção~\ref{sec:robos}, faz-se uma introdução a robótica móvel e apresenta-se um estudo sobre sensoriamento. 
 	
-	A revisão bibliográfica completa pode ser encontrados no fim do documento, sendo devidamente citada durante o texto. 
+	O trabalho se encerra com algumas simulações computacionais do problema, na Seção~\ref{sec:disc}, além de discussões envolvendo esses resultados. O texto também contém dois apêndices, podendo serem usados como consulta, caracterizando algumas ferramentas matemáticas utilizadas. 
+	\\
+	
+	A revisão bibliográfica completa pode ser encontrada no fim do documento, sendo devidamente citada durante o texto. 
 	
 	\newpage
 	
@@ -129,56 +133,271 @@
 	\newpage
 	
 	\input{secGD/gphilippi.tex}
+	
+	\newpage
+	
+	\input{secRobosMoveis/gphilippi.tex}
 
-		\newpage
+	\newpage
 	\section{Resultados e Discussão \label{sec:disc}}
-	Como vimos, a quantidade de soluções bem como o tempo para resolvê-las está crescendo de forma considerável proporcional a $|V|$. Isso é um problema real caso se queira calcular instâncias reais do problema, pois encontramos com grande facilidade proteínas com $|V|$ da ordem de 2000 no repositório wwPDB.
+	Afim de ilustrar e averiguar a eficiência do que foi apresentado aqui, realizou-se algumas simulações computacionais implementando os Algorítimos~\ref{alg:realizacaoIterativa} e~\ref{alg:realizacaoTrilateration} em C. 
+	\\
 	
-	Uma boa proposta para implementações futuras seria um estudo sobre a otimização de memória necessária para implementar o BP. Isso pode ser observado no desenvolvimento do MD-Jeep, uma implementação em C feita por Antonio Mucherino, Leo Liberti e Carlile Lavor em 2010.
+	Tais simulações foram executadas em um computador pessoal utilizando o sistema operacional Manjaro (uma distribuição Linux baseada em Arch), equipado com um processador Intel Core i5-8600K (6 núcleos operando em 4.1Ghz) e um pente de memória DDR4 2666MHz de 8Gb em \textit{Single-Channel} (operando, por tanto, em 1333Mhz).	
+	\\
 	
-	Uma solução trivial pensada para contornar esse aumento do número de soluções foi tentar manipular o valor de $\varepsilon$, de forma a produzir um filtro manual que diminuísse a quantidade de soluções. Porém, não obtivemos resultados satisfatórios. Pequenas oscilações em torno de um certo valor de $\varepsilon$ (intrínsecos de cada molécula) faziam que, ou os resultados continuassem crescendo, ou não fossem nenhum.
+	Para a eficiência dos algorítimos, fez-se uso da biblioteca de código aberto LAPACKE, que é uma interface para o LAPACK (\textit{Linear Algebra Packge}) em C, onde encontra-se algumas implementações muito otimizadas de operações elementares envolvendo Álgebra Linear. Por exemplo, possui funções para solucionar sistemas matriz-vetor $Ax = b$, através da decomposição matricial LU \cite{AlgebraLinearElon}, que pôde ser usada para solucionar o sistema linear~\ref{eq:DGPLinearSystem}, discutido na seção~\ref{sec:trilateration}.
 	
-	Outra alternativa para solucionar esse problema pode ser encontrada estudando as simetrias do DMDGP. Perceba, nas Tabelas e, que os resultados possuem uma similaridade. Isso se dá devido as simetrias nas soluções de cada ramificação da arvore $T$, pois os resultados são simétricos (espelhados ao plano formado pelos três átomos anteriores). Com isso, não precisamos buscar por todas as soluções da árvore de busca, pois, tendo uma solução, consegue-se a sua simétrica em tempo linear. Isso é implementado em uma variação do BP, chamado \textit{SymBP}.
+	\subsection{Erro acumulado}
 	
-	Outras otimizações do algorítimo BP também podem ser encontrados na literatura, como uma versão que utiliza um paradigma Dividir e Conquistar, onde se constrói uma implementação paralela (Multithreading), que se utiliza das simetrias para produzir vários SymBP em paralelo. Um estudo sobre essas implementações poderiam ser úteis para otimizar nosso algorítimo.
+	Como tanto o algorítimo~\ref{alg:realizacaoIterativa} quanto o~\ref{alg:realizacaoTrilateration} calculam posições em função de realizações previamente calculadas, é inevitável o acumulo de erros entre essas realizações. Mesmo que a solução teórica seja perfeita, na prática os valores não são representados exatamente. Isso se dá pois o computador não trabalha no conjunto dos números reais, ou, pior, para qualquer $i \in\mathbb{R}$, a possibilidade de $i$ não pode ser representado pelo computador tem probabilidade 1. Por isso, gera-se a necessidade de analisar o quão perto as soluções calculadas estão das reais.
+	
+	Neste texto, a principal medida de confiabilidade de uma solução será calculada através da \textit{Mean Distance Error}, como segue \cite{mucherino:BP}.
+	
+	\begin{center}
+		\begin{minipage}{0.9 \linewidth}
+			\textbf{\textit{Mean Distance Error} (MDE)}: Seja $G= (V,E,d)$ um grafo ponderado que defina uma instância DGP. Se $\{x_1, \dots, x_n\}$ é um conjunto que define uma realização dos $n$ vértices de $G$ e então,
+			$$MDE(x) = \frac{1}{|d\;|} \sum_{i,j}^{}\frac{|||x_i - x_j|| - d_{i,j}|}{d_{i,j}} .$$
+		\end{minipage}
+	\end{center}
+	
+	\subsection{Exemplares utilizados}
+	Como entrada das simulações, implementou-se o Algorítimo~\ref{alg:instancia}, que gera um grafo $K$-laterativo com $n$ vértices de coordenadas aleatórias $x_i = (x_{i1},\dots,x_{iK})\in \mathbb{R}^K$ e provê um conjunto limitável de arestas. Esse limitação é definida pelo parâmetro $\mathcal{P} \in [0,1]$, como coeficiente de probabilidade de uma aresta ser ou não acessível entre dois vértices aleatório $v_i$ e $v_j$, com $i,j>K+1$ (garantindo que sempre haverá ao menos uma (K+1)-clique adjacente a todo vértice).
+	\\
+	
+	\begin{algorithm}[H]
+		\label{alg:instancia}
+		\tcp{Percorra todos os vértices}
+		\For{$i\in \{0,\dots,n\}$}{
+			\tcp{Varie entre cada coordenada de $x_i\in\mathbb{R}^K$}
+			\For{$j \in {1,\dots,K}$}{
+				\tcc{Atribua um valor aleatório para cada co. A função Aleatorio(\textit{m}) gera valores entre 0 e \textit{m}.}
+				$x_{ij} = $Aleatorio$(m)$; 
+			}
+		}
+		\tcp{Para cada vértice, percorra todos os seus antecessores}
+		\For{$x_i \in \{x_n, \dots,x_1\}$}{
+			\For{$x_j \in \{x_1, \dots,x_{i-1}\}$}{
+				\tcp{Gere um número $a \in [0,1]$ aleatório.}
+				Seja $a$ = Aleatorio(1);
+				
+				\tcp{Verifique se $a > \mathcal{P}$ e se $i,j > K$}
+				\If{$a > \mathcal{P}$ and $i > K$ and $j>K$}{
+					\tcp{Defina uma aresta entre $x_i$ e $x_j$}
+					$e_{i,j} = \|x_i - x_j\|$;
+				}
+			}
+		}
+		\textbf{return} $G = (\{v_1,\dots,v_n\}, \{\{e_{1,2}\}, \dots,\{e_{j}\}\})$;
+		\caption{$G =$ criaInstancia$(n, \mathcal{P})$}
+	\end{algorithm}
+	\vspace{0.4cm}
+	
+	Por exemplo, com o Algorítimo~\ref{alg:instancia} gerou-se a instância mostrada ma Figura~\ref{fig:inst}.
+	
+	\begin{figure}[H]
+	\begin{center}
+		\begin{minipage}{0.15 \linewidth}
+			\begin{table}[H]
+				\centering
+				\begin{tabular}{ |c c c| } 
+					\hline
+					\textbf{x} & \textbf{y} & \textbf{z} \\\hline
+					(33, & 36, & 27)\\
+
+					(15, & 43, & 35)\\
+
+					(36, & 42, & 49)\\
+
+					(21, & 12, & 27)\\
+
+					(40, & 9, & 13)\\\hline
+
+				\end{tabular}
+				\label{tab:re1}
+			\end{table}
+		\end{minipage}
+	\hspace{0.1cm}
+		\begin{minipage}{0.8 \linewidth}
+			$$
+			\begin{bmatrix}
+			 0.000000 & 20.904545 & 23.000000 & 26.832816 & 31.208973\\
+
+			20.904545 & 0.000000 & 25.258662 & 32.572995 & 47.592016\\
+
+			23.000000 & 25.258662 & 0.000000 & 40.112342 & 49.000000\\
+
+			26.832816 & 32.572995 & 40.112342 & 0.000000 & 23.790755\\
+
+			31.208973 & 47.592016 & 49.000000 & 23.790755 & 0.000000	
+			\end{bmatrix}
+			$$
+		\end{minipage}
+	\end{center}
+\caption{A esquerda, as coordenadas dos vértices gerados e, a direita, a matriz de distância a eles associados.}
+\label{fig:inst}
+\end{figure}
+	
+	\subsection{Simulações}
+	
+	Primeiramente. para gerar instâncias do algorítimo~\ref{alg:realizacaoIterativa}, deve-se usar o algorítimo~\ref{alg:instancia} com $\mathcal{P} = 100$. Assim pode-se garantir a geração de um grafo completo. Criou-se, então, instâncias com tamanhos variados: $n \in \{5, 6, 7,10,15,20,30,40,50,100,200,400,500\}$. A seguir apresenta-se alguns gráficos sobre os resultados.
+	
+	\begin{figure}[H]
+		\begin{center}
+			\begin{minipage}{0.45 \linewidth}
+				\begin{figure}[H]
+					\begin{center}
+						\includegraphics[width=1\linewidth]{figures/tempoTri.png}
+					\end{center}
+				\end{figure}
+			\end{minipage}
+			\hspace{0.1cm}
+			\begin{minipage}{0.45 \linewidth}
+				
+				\begin{figure}[H]
+					\begin{center}
+						\includegraphics[width=1\linewidth]{figures/mdeTri.png}
+					\end{center}
+				\end{figure}
+			\end{minipage}
+		\end{center}
+		\caption{A esquerda, o tempo de processo e, a direita, a ordem de grandeza associada ao MDE das soluções.}
+		\label{fig:tri}
+	\end{figure}
+	
+	Perceba o comportamento mostrado na Figura~\ref{fig:tri}. Teve-se que fazer uma linearização no gráfico que representa o MDE da solução, pois este cresceu exponencialmente e foi para a ordem de $10^{200}$ em 500 vértices. Esse comportamento se deu por conta dos erros acumulados entre as iterações.
+	\\
+	
+	Uma proposta pensada para contornar essa situação infeliz foi alterar o valor de $\mathcal{P}$, deixando o menor, obrigando o algorítimo a calcular realizações utilizando vértices iniciais. Porém, isso implicaria em um grafo não completo, o que não condiz definição do Algorítimo~\ref{alg:realizacaoIterativa}.
+	
+	Outra solução proposta fora de utilizar sempre os primeiros vértices no lugar dos antecessores mais próximos. Isso significaria utilizar sempre os vértices âncoras para realizar os demais, semelhante com o que é feito no sistema GPS. Com isso, tivemos os resultados satisfatórios apresentados pela Figura~\ref{fig:triPri}. Perceba que mesmo com 500 vértices ainda obteve-se resultados com $MDE$ na ordem de $10^{-20}$.
+	
+	\begin{figure}[H]
+		\begin{center}
+			\begin{minipage}{0.45 \linewidth}
+				\begin{figure}[H]
+					\begin{center}
+						\includegraphics[width=1\linewidth]{figures/tempoTriPri.png}
+					\end{center}
+				\end{figure}
+			\end{minipage}
+			\hspace{0.1cm}
+			\begin{minipage}{0.45 \linewidth}
+				
+				\begin{figure}[H]
+					\begin{center}
+						\includegraphics[width=1\linewidth]{figures/mdeTriPro.png}
+					\end{center}
+					\label{fig:mdeTri}
+				\end{figure}
+			\end{minipage}
+		\end{center}
+		\caption{A esquerda, o tempo de processo e, a direita, a ordem de grandeza associada ao MDE das soluções.}
+		\label{fig:triPri}
+	\end{figure}
+	
+	Também simulou-se o Algorítimo~\ref{alg:realizacaoTrilateration}, que teve um comportamento muito similar ao Algorítimo~\ref{alg:realizacaoIterativa}, como era de se esperar. Também usou-se instâncias $n$ variando em $\{5, 6, 7,10,15,20,30,40,50,100,200,400,500\}$. Porém, agora, com uma busca inteligente por vértices adjacentes, pode-se variar $\mathcal{P}$ afim de analisar diferentes geometrias para o problema, como apresenta-se a seguir.
+	
+	\subsubsection*{Instâncias com 70\% de arestas}
+	
+	\begin{figure}[H]
+		\begin{center}
+			\begin{minipage}{0.45 \linewidth}
+				\begin{figure}[H]
+					\begin{center}
+						\includegraphics[width=1\linewidth]{figures/timeTriPro1.png}
+					\end{center}
+				\end{figure}
+			\end{minipage}
+			\hspace{0.1cm}
+			\begin{minipage}{0.45 \linewidth}
+				
+				\begin{figure}[H]
+					\begin{center}
+						\includegraphics[width=1\linewidth]{figures/mdeTriPro1.png}
+					\end{center}
+					\label{fig:mdeTri}
+				\end{figure}
+			\end{minipage}
+		\end{center}
+		\caption{A esquerda, o tempo de processo e, a direita, a ordem de grandeza associada ao MDE das soluções. Utilizou-se $\mathcal{P} = 0.7$.}
+		\label{fig:triPri4}
+	\end{figure}
+	
+	\subsubsection*{Instâncias com 5\% de arestas}
+	
+	\begin{figure}[H]
+		\begin{center}
+			\begin{minipage}{0.45 \linewidth}
+				\begin{figure}[H]
+					\begin{center}
+						\includegraphics[width=1\linewidth]{figures/timePro2.png}
+					\end{center}
+				\end{figure}
+			\end{minipage}
+			\hspace{0.1cm}
+			\begin{minipage}{0.45 \linewidth}
+				
+				\begin{figure}[H]
+					\begin{center}
+						\includegraphics[width=1\linewidth]{figures/mdeTriPro2.png}
+					\end{center}
+					\label{fig:mdeTri}
+				\end{figure}
+			\end{minipage}
+		\end{center}
+		\caption{A esquerda, o tempo de processo e, a direita, a ordem de grandeza associada ao MDE das soluções. Utilizou-se $\mathcal{P} = 0.05$.}
+		\label{fig:triPri3}
+	\end{figure}
+	
+	Como esperado, é perceptível uma grande melhora na MDE das soluções conforme se diminui o valor de $\mathcal{P}$. 
+	
+	Também deve-se perceber que o tempo não obedeceu um padrão perfeito. Podemos relacionar esse fato com a aleatoriedade das instâncias, como pode-se notar que o Algoritmo~\ref{alg:realizacaoTrilateration} teve maios volatilidade no padrão temporal. Mesmo assim, há um consenso. As soluções mostradas nas Figuras~\ref{fig:triPri} e~\ref{fig:triPri3}, por exemplo, demonstram claramente um padrão polinomial, indo de encontro com o que foi apresentado na seção~\ref{sec:oi}.
 	
 	\newpage
 	\section{Considerações Finais}
-	Com isso concluímos um estudo elementar sobre o Discretizable Molecular Distance Geometry Problem, tal qual teve como resultado principal o software HCProt. 
+	Com isso, concluí-se o estudo sobre a Geometria de Distâncias aplicada ao problema de localização de sensores, tal qual teve como resultado um algorítimo que garante encontrar a solução do problema (se houver). .
+	\\
 	
-	Nos cabe, nesse momento, voltarmos para as propostas levantadas internamente no início do projeto e verificar se elas foram cumpridas. Seguem o conjunto de objetivos específicos desse projeto, munidos de breve conclusão:
+	Nos cabe, nesse momento, voltarmos atenção às propostas levantadas internamente no início do projeto e verificar se elas foram cumpridas. Seguem o conjunto de objetivos específicos desse projeto, munidos de breve conclusão:
 	
 	\begin{enumerate}
-		\item Entender as estruturas básicas de proteínas:
 		
-		Este fora feito de forma intensa, resultando no Capítulo deste documento;
+		\item Estudar formas viáveis (pelos vieses energético, de construção e precisão da medida) para obtenção das distâncias entre os elementos do sistema físico:
 		
-		\item Relacionar-se eficientemente com o PDB (\emph{Protein Data Bank}) - como extrair os dados computacionais que servirão de insumos:
+		Fortemente embasado em \cite{savvides2001dynamic} e \cite{sensorsForMobileRobots}, faz-se uma apresentação sobre esses conceitos na Seção~\ref{sec:sensores}. 
 		
-		Apresentou-se este repositório junto do Capítulo, devido sua proximidade temática. Vale mencionar que lá também fora apresentado o software HCProt, implementado pelo autor deste documento, que visa automatizar o processo de extração dos dados de distâncias do repositório PDB;
+		\item Estudar as possíveis distribuições dos Robôs Móveis em um sistema genérico, visando verificar quais conjuntos de dados possam ser garantidos como entradas para a construção do problema:
 		
-		\item Compreender o DMDGP e sua estrutura de ordenamento dos vértices:
+		Além de estudar distribuições genéricas, como em \cite{eren2004rigidity}, desenvolve-se na Seção~\ref{sec:disc} o Algorítimo~\ref{alg:instancia}, que cria instâncias aleatórias com diferentes densidades de ligações.
 		
-		Este objetivo se resume ao Capítulo. Especialmente no estudo da ordenação HC, feita no fim do capítulo;
+		\item Verificar a solução do Discretizable Order Problem \cite{carlileGDandAplications} aplicado ao problema proposto e estudar o ordenamento de vértices que se adeque aos objetivos do trabalho:
 		
-		\item Conhecer todos os passos do algoritmo BP:
+		Durante o desenvolvimento da Seção~\ref{sec:GD}, percebeu-se que uma ordem de discretização não seria necessária, visto que a definição do problema necessita de uma única solução \cite{libertiEDG}. Por conta disso, definiu-se a ordem de $K$-lateração, que garante a unicidade de solução.
 		
-		Apresentado no Capítulo, onde estudou-se todos os passos referentes a esse algorítimo: Inicialização, \textit{branching} e \textit{pruning};
+		\item Caso consiga-se uma boa ordenação para os vértices, verificar a aplicação do algorítimo Branch-And-Prune \cite{carlile:BP} para a solução do problema proposto. Se não for possível, estudar outros algorítimos que possam solucionar o problema:
 		
-		\item Simular, computacionalmente, o algoritmo BP com instâncias artificialmente geradas, como descrito na Literatura, dominando cada passo utilizado:
+		Visto que o problema não era discreto, não fora possível aplicar o algorítimo Branch-And-Prune. Ao invés disso, se propôs o Algorítimo~\ref{alg:realizacaoTrilateration}, que utiliza a trilateração como núcleo e garante no máximo uma solução.
 		
-		Feito no fim do capítulo, com resultados condizentes com os esperados;
+		\item Estudar a complexidade computacional do algorítimo proposto aplicado as possíveis distribuições:
 		
-		\item Aplicar o Algoritmo BP estudado em estruturas proteicas como instâncias reais do problema:
+		Isso foi feito no fim das Seções~\ref{sec:GD} e~\ref{sec:disc}, onde verificou-se que o algorítimo pode ser resolvido em tempo polinomial. Também mostrou-se um estudo sobre diferentes visões da geometria do problema afim de minimizar os erros associados. 
 		
-		Não foi possível aplicar o BP a estás instâncias. Há uma pequena discussão, no Capitulo, sobre essa situação.
+		\item Simular computacionalmente o algoritmo para solução do problema com instâncias artificialmente geradas, dominando cada passo utilizado:
 		
-		Vale lembrar, porém, que uma parte importante desse resultado foi desenvolvido ao criar o software HCProt, possibilitando a extração dos dados de moléculas reais do repositório PDB, bem como a ordenação dos átomos, discretizando o problema.
+		Simulações apresentadas, de forma satisfatória, na Seção~\ref{sec:disc}.
+		
+		\item Aplicar o algoritmo estudado em estruturas de pequena escala, como instâncias reais do problema:
+		
+		Não fora possível cumprir este último objetivo. Infelizmente, a manufatura de robôs móveis usando sensores de distância se demonstrou excessivamente custosa \cite{savvides2001dynamic, sensorsForMobileRobots}.
+		
+		Vale lembrar, porém, que a utilização de instâncias artificiais genéricas se mostrou de grande importância. Pode-se averiguar e discutir sobre diferentes geometrias, mesmo sem a prototipação de fato.
+		
 	\end{enumerate}
 	
-	Como implementações futuras, deseja-se estudar mais sobre as distâncias intervalares que aparecem com a ordenação HC (detalhe este que não fora considerado na nossa implementação). Esses intervalos ocorrem justamente porque o HC order foi pensado de forma que a fase de \textit{branching} do algorítimo BP só ocorra com distâncias extras advindas da RMN --- que, como vimos, são dados intervalares (Capítulo). Uma ferramenta que tem demonstrado potencial para auxiliar nessa passagem é a \textit{Geometria Conforme}.
+	Como experiências futuras, deseja-se estudar mais sobre a obtenção e tratamento de dados de distâncias, visto que esses possuem erros de medida \cite{sensorsForMobileRobots} (não levados em consideração nesse trabalho). Alguns trabalhos relacionados à Geometria de Distâncias aplicada ao caso intervalar são mostrados em \cite{wsnlSemidefinitePrograming}. Há curiosidade em ver como medida MDE se comporta para uma quantidade grande de vértices associados a erros de medida.
 	
-	Também deseja-se poder fazer um novo estudo do problema envolvendo a \textit{Álgebra dos Quatérnios}, tentando otimizar o calculo que hoje envolve a matriz $B_i$, pois estes já demonstraram conter operações mais eficientes que as matriciais para realizar rotações.
+	Também deseja-se fazer estudos sobre geometrias mínimas para o problema, como feito em \cite{wsnlFewAnchors}. Deseja-se verificar um conjunto de condições que restringem o movimento de um robô móvel afim de garantir que este ainda possa ser localizado.
 	
 	\newpage
 	\phantomsection
