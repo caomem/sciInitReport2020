@@ -1,4 +1,4 @@
- \documentclass[a4paper,12pt]{article}
+\documentclass[a4paper,12pt]{report}
 \usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
 \usepackage[brazil]{babel}
 \usepackage[T1]{fontenc}
@@ -23,6 +23,8 @@
 \usepackage{algorithmic}
 \newtheorem{definicao}{Definição}[section]
 \newtheorem{teorema}{Teorema}[section]
+%\setcounter{tocdepth}{3}
+%\setcounter{secnumdepth}{3}
 
 \title{Disposição de Robôs Móveis no espaço Euclidiano 3D: uma aplicação de Geometria de Distâncias}
 \author{Guilherme Philippi\Mark{*}, orientado por Felipe Delfini Caetano Fidalgo\Mark{\dagger}\\Campus Blumenau\\Universidade Federal de Santa Catarina\\UFSC
@@ -40,7 +42,7 @@
 		\vspace{1cm}
 		
 		\textsc{\LARGE \hspace{-0.17cm}Universidade Federal de Santa Catarina}\\[0.5cm] % Name of your university/college
-		{\Large Centro de Blumenau \\ Departamento de Matemática}\\[1.5cm] % Major heading such as course name
+		{\Large Centro Tecnológico, de Ciências Exatas e Educação\\ Departamento de Matemática}\\[1.5cm] % Major heading such as course name
 		\textsc{\Large PIBIC \\ Relatório Final \vspace{1.5cm}  \\ }{\large Geometria de Distâncias e Álgebras Geométricas: novas perspectivas geométricas, computacionais e aplicações}\\[2.0cm] % Minor heading such as course title
 		
 		%\textsc{\LARGE Universidade Federal de Santa Catarina}\\[0.5cm] % Name of your university/college
@@ -61,7 +63,7 @@
 		
 		\begin{minipage}{1\textwidth}
 			\begin{center} \large
-				Guilherme Philippi (g.philippi@grad.ufsc.br),
+				Guilherme Philippi (guilherme.philippi@hotmail.com),
 				\vspace{0.5cm}
 				\\
 				\underline{\textsc{Orientador:}} \vspace{0.2cm}
@@ -79,7 +81,7 @@
 	
 	
 	\newpage
-	\vspace{-1cm}
+	%\vspace{-1cm}
 	\tableofcontents
 	\newpage
 	
@@ -89,9 +91,9 @@
 	\end{center}
 	
 	
-	In this work, the Distance Geometry Problem Trilaterative applied to the sensor location problem was studied, as well as the necessary tools for its understanding, going from graph theory to the characteristics of systems involving mobile robotics. An overview of Geometry of Distances was presented, which enabled the correct definition of the problem and polynomial algorithms to solve it. The text ends with an analysis of computer simulations of the problem, using different geometries, as well as an algorithm to generate them.
+	In this work, the application of the so called Distance Geometry Problem to the Sensor Location Problem was studied, as well as the necessary tools for its understanding, from Graph Theory to the characteristics of systems involving mobile robotics. An overview of Distance Geometry was presented, which enabled the correct definition of the problem and polynomial algorithms to solve it. The text ends with an analysis of computer simulations of the problem, using different geometries, as well as an algorithm to generate them.
 	
-	\textbf{Keywords:} TDGP, Distance Geometry, Mobile Robotics.
+	\textbf{Keywords:} Distance Geometry, Mobile Robotics.
 	
 	
 	\vspace{2cm}	
@@ -100,15 +102,15 @@
 		\textbf{Resumo}
 	\end{center}
 	
-	Neste trabalho, foram estudados o Trilaterativo Distance Geometry Problem aplicado ao problema de localização de sensores, bem como as ferramentas necessárias para sua compreensão, passando da teoria de grafos às características de sistemas envolvendo robótica móvel. Apresentou-se uma visão geral de Geometria de Distâncias que possibilitou a correta definição do problema e de algorítimos polinomiais para solucioná-lo. O texto se encerra com uma analise de simulações computacionais do problema, utilizando diferentes geometrias, bem como um algorítimo para gerá-las. 
+	Neste trabalho, estudou-se o assim chamado Problema de Geometria de Distâncias aplicado ao Problema de Localização de Sensores, bem como as ferramentas necessárias para sua compreensão, passando da teoria de grafos às características de sistemas envolvendo robótica móvel. Apresentou-se uma visão geral de Geometria de Distâncias, o que possibilitou a correta definição do problema e de algorítimos polinomiais para solucioná-lo. O texto se encerra com uma analise de simulações computacionais do problema, utilizando diferentes geometrias, bem como um algorítimo para gerá-las. 
 	
-	\textbf{Palavras-chave:} TDGP, Geometria de Distâncias, Robótica Móvel.
+	\textbf{Palavras-chave:} Geometria de Distâncias, Robótica Móvel.
 	
 	
 	\newpage
-	\section{Introdução}
+	\chapter{Introdução}
 	
-	Percebe-se uma tendencia de mercado em se adotar sistemas autônomos móveis para realizar funções que dependem de um grande número de maquinas, como o controle do estoque em um armazém, um sistema de entrega ou o cultivo e tratamento de grandes áreas de plantio \cite{mobileRobotsCook}. O estudo da localização de robôs móveis é vasta na literatura \cite{eren2004rigidity, mobileRobotsTzafestas}, o que demonstra a importância deste tema. Qualquer solução de engenharia móvel, seja autônoma ou não, precisa definir uma forma de localizar seu objeto de estudo. Por conta disso, ao decorrer desse texto apresenta-se soluções envolvendo Geometria de Distâncias como alternativas para a obtenção de localização.
+	Percebe-se uma tendencia de mercado em se adotar sistemas autônomos móveis para realizar funções que dependem de um grande número de máquinas, como o controle do estoque em um armazém, um sistema de entrega ou o cultivo e tratamento de grandes áreas de plantio \cite{mobileRobotsCook}. O estudo da localização de robôs móveis é vasta na literatura \cite{eren2004rigidity, mobileRobotsTzafestas}, o que demonstra a importância deste tema. Qualquer solução de engenharia móvel, seja autônoma ou não, precisa definir uma forma de localizar seu objeto de estudo. Por conta disso, no decorrer desse texto, estuda-se algumas soluções envolvendo Geometria de Distâncias para a obtenção de localização.
 	\\
 	
 	A Geometria de Distâncias (GD) é uma matéria de interesse relativamente recente da Ciência \cite{carlileGDandAplications}, disposta em uma vasta interseção entre diversas áreas do conhecimento. Em suma, ela se preocupa com os aspectos geométricos decorrentes dos objetos que estão dispostos em algum espaço e possuam uma relação de distância medível, advindas de origens tão variáveis quanto se queira. Como é o caso de estudo deste texto: distâncias entre robôs móveis com seu meio e, em particular, outros robôs móveis.
@@ -123,23 +125,19 @@
 	
 	\newpage
 	
-	\phantomsection
-	\addcontentsline{toc}{section}{Materiais e Métodos}
-	\section*{Materiais e Métodos}
-	No que se segue, apresenta-se o estudo desenvolvido neste trabalho.
+	\chapter{Materiais e Métodos}
 	
 	\input{secGrafos/gphilippi.tex}
 	
 	\newpage
 	
 	\input{secGD/gphilippi.tex}
-	
-	\newpage
-	
-	\input{secRobosMoveis/gphilippi.tex}
 
 	\newpage
-	\section{Resultados e Discussão \label{sec:disc}}
+	\chapter{Resultados e Discussão \label{sec:disc}}
+	
+	\input{secRobosMoveis/gphilippi.tex}
+	
 	Afim de ilustrar e averiguar a eficiência do que foi apresentado aqui, realizou-se algumas simulações computacionais implementando os Algorítimos~\ref{alg:realizacaoIterativa} e~\ref{alg:realizacaoTrilateration} em C. 
 	\\
 	
@@ -148,9 +146,9 @@
 	
 	Para a eficiência dos algorítimos, fez-se uso da biblioteca de código aberto LAPACKE, que é uma interface para o LAPACK (\textit{Linear Algebra Packge}) em C, onde encontra-se algumas implementações muito otimizadas de operações elementares envolvendo Álgebra Linear. Por exemplo, possui funções para solucionar sistemas matriz-vetor $Ax = b$, através da decomposição matricial LU \cite{AlgebraLinearElon}, que pôde ser usada para solucionar o sistema linear~\ref{eq:DGPLinearSystem}, discutido na seção~\ref{sec:trilateration}.
 	
-	\subsection{Erro acumulado}
+	\section{Medindo erros}%Erro acumulado
 	
-	Como tanto o algorítimo~\ref{alg:realizacaoIterativa} quanto o~\ref{alg:realizacaoTrilateration} calculam posições em função de realizações previamente calculadas, é inevitável o acumulo de erros entre essas realizações. Mesmo que a solução teórica seja perfeita, na prática os valores não são representados exatamente. Isso se dá pois o computador não trabalha no conjunto dos números reais, ou, pior, para qualquer $i \in\mathbb{R}$, a possibilidade de $i$ não pode ser representado pelo computador tem probabilidade 1. Por isso, gera-se a necessidade de analisar o quão perto as soluções calculadas estão das reais.
+	Como tanto o algorítimo~\ref{alg:realizacaoIterativa} quanto o~\ref{alg:realizacaoTrilateration} calculam posições em função de realizações previamente calculadas, é inevitável o acumulo de erros entre essas realizações. Mesmo que a solução teórica seja perfeita, na prática os valores não são representados exatamente. Isso se dá pois o computador não trabalha no conjunto dos números reais, ou, pior, para qualquer $i \in\mathbb{R}$, a possibilidade de $i$ não pode ser representado por um computador tem probabilidade 1. Por isso, gera-se a necessidade de analisar o quão perto as soluções calculadas estão das reais.
 	
 	Neste texto, a principal medida de confiabilidade de uma solução será calculada através da \textit{Mean Distance Error}, como segue \cite{mucherino:BP}.
 	
@@ -161,7 +159,7 @@
 		\end{minipage}
 	\end{center}
 	
-	\subsection{Exemplares utilizados}
+	\section{Exemplares utilizados}
 	Como entrada das simulações, implementou-se o Algorítimo~\ref{alg:instancia}, que gera um grafo $K$-laterativo com $n$ vértices de coordenadas aleatórias $x_i = (x_{i1},\dots,x_{iK})\in \mathbb{R}^K$ e provê um conjunto limitável de arestas. Esse limitação é definida pelo parâmetro $\mathcal{P} \in [0,1]$, como coeficiente de probabilidade de uma aresta ser ou não acessível entre dois vértices aleatório $v_i$ e $v_j$, com $i,j>K+1$ (garantindo que sempre haverá ao menos uma (K+1)-clique adjacente a todo vértice).
 	\\
 	
@@ -219,26 +217,26 @@
 		\end{minipage}
 	\hspace{0.1cm}
 		\begin{minipage}{0.8 \linewidth}
-			$$
-			\begin{bmatrix}
-			 0.000000 & 20.904545 & 23.000000 & 26.832816 & 31.208973\\
-
-			20.904545 & 0.000000 & 25.258662 & 32.572995 & 47.592016\\
-
-			23.000000 & 25.258662 & 0.000000 & 40.112342 & 49.000000\\
-
-			26.832816 & 32.572995 & 40.112342 & 0.000000 & 23.790755\\
-
-			31.208973 & 47.592016 & 49.000000 & 23.790755 & 0.000000	
-			\end{bmatrix}
-			$$
+			\begin{equation*}
+				\begin{bmatrix}
+				 0.000000 & 20.904545 & 23.000000 & 26.832816 & 31.208973\\
+	
+				20.904545 & 0.000000 & 25.258662 & 32.572995 & 47.592016\\
+	
+				23.000000 & 25.258662 & 0.000000 & 40.112342 & 49.000000\\
+	
+				26.832816 & 32.572995 & 40.112342 & 0.000000 & 23.790755\\
+	
+				31.208973 & 47.592016 & 49.000000 & 23.790755 & 0.000000	
+				\end{bmatrix}
+			\end{equation*}
 		\end{minipage}
 	\end{center}
 \caption{A esquerda, as coordenadas dos vértices gerados e, a direita, a matriz de distância a eles associados.}
 \label{fig:inst}
 \end{figure}
 	
-	\subsection{Simulações}
+	\section{Simulações}
 	
 	Primeiramente. para gerar instâncias do algorítimo~\ref{alg:realizacaoIterativa}, deve-se usar o algorítimo~\ref{alg:instancia} com $\mathcal{P} = 100$. Assim pode-se garantir a geração de um grafo completo. Criou-se, então, instâncias com tamanhos variados: $n \in \{5, 6, 7,10,15,20,30,40,50,100,200,400,500\}$. A seguir apresenta-se alguns gráficos sobre os resultados.
 	
@@ -355,7 +353,7 @@
 	Também deve-se perceber que o tempo não obedeceu um padrão perfeito. Podemos relacionar esse fato com a aleatoriedade das instâncias, como pode-se notar que o Algoritmo~\ref{alg:realizacaoTrilateration} teve maios volatilidade no padrão temporal. Mesmo assim, há um consenso. As soluções mostradas nas Figuras~\ref{fig:triPri} e~\ref{fig:triPri3}, por exemplo, demonstram claramente um padrão polinomial, indo de encontro com o que foi apresentado na seção~\ref{sec:oi}.
 	
 	\newpage
-	\section{Considerações Finais}
+	\chapter{Considerações Finais}
 	Com isso, concluí-se o estudo sobre a Geometria de Distâncias aplicada ao problema de localização de sensores, tal qual teve como resultado um algorítimo que garante encontrar a solução do problema (se houver). .
 	\\
 	
@@ -401,7 +399,7 @@
 	
 	\newpage
 	\phantomsection
-	\addcontentsline{toc}{section}{Referências}
+	\addcontentsline{toc}{chapter}{Referências Bibliográficas}
 	
 	\bibliographystyle{unsrt}
 	\bibliography{references}
