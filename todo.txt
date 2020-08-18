@@ -1,0 +1,7 @@
+Faça uma revisão no texto sobre os nomes das coisas. Sempre que aparecem em "definições, mesmo que no corpo do texto, além do itálico, elas devem vir com letras maiúsculas iniciais, visto que são nomes próprios. Isso ocorre aqui, no que já passou e no que se segue. Take a look! ;) pag6
+Para que não tenha sempre de repetir a mesma referência várias vezes em uma mesma seção, faça sempre uma frase no início da mesma se referindo a esta referência e que ela será usada em toda a Seção. Isso ocorre nesta Seção com a referência [8]. pag6
+Particularmente, eu gosto de um texto fluido. Entretanto, eu acredito que sistematizar definições dentro de um ambiente DEFINIÇÃO, assim como os teoremas e proposições (e outros), fique melhor colocado pela estrutura de 'book' que deu ao seu texto. pag 7
+
+não há a necessidade de quebrar a seção, mas coloquei uma subsubseção não numerada, pode ser? Só para dar subtitulo a definição. Pareceu um formato legal de texto.
+
+Importante colocar a demonstração do "Six gems..." pag 11
