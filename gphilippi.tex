@@ -142,7 +142,7 @@
 	Afim de ilustrar e averiguar a eficiência do que foi apresentado aqui, realizou-se algumas simulações computacionais implementando os Algorítimos~\ref{alg:realizacaoIterativa} e~\ref{alg:realizacaoTrilateration} em C. 
 	\\
 	
-	Tais simulações foram executadas em um computador pessoal utilizando o sistema operacional Manjaro (uma distribuição Linux baseada em Arch), equipado com um processador Intel Core i5-8600K (6 núcleos operando em 4.1Ghz) e um pente de memória DDR4 2666MHz de 8Gb em \textit{Single-Channel} (operando, por tanto, em 1333Mhz).	
+	Tais simulações foram executadas em um computador pessoal utilizando o sistema operacional Manjaro (uma distribuição Linux baseada em Arch), equipado com um processador Intel Core i5-8600K (6 núcleos operando em 4.1Ghz) e um pente de memória DDR4 2666MHz de 8Gb em \textit{Single-Channel} (operando, portanto, em 1333Mhz).	
 	\\
 	
 	Para a eficiência dos algorítimos, fez-se uso da biblioteca de código aberto LAPACKE, que é uma interface para o LAPACK (\textit{Linear Algebra Packge}) em C, onde encontra-se algumas implementações muito otimizadas de operações elementares envolvendo Álgebra Linear. Por exemplo, possui funções para solucionar sistemas matriz-vetor $Ax = b$, através da decomposição matricial LU \cite{AlgebraLinearElon}, que pôde ser usada para solucionar o sistema linear~\ref{eq:DGPLinearSystem}, discutido na seção~\ref{sec:trilateration}.
@@ -264,12 +264,12 @@
 		\label{fig:tri}
 	\end{figure}
 	
-	Perceba o comportamento mostrado na Figura~\ref{fig:tri}. Teve-se que fazer uma linearização no gráfico que representa o MDE da solução, pois este cresceu exponencialmente e foi para a ordem de $10^{200}$ em 500 vértices. Esse comportamento se deu por conta dos erros acumulados entre as iterações.
+	Veja o comportamento mostrado na Figura~\ref{fig:tri}. Teve-se que fazer uma linearização no gráfico que representa o MDE da solução, pois este cresceu exponencialmente e foi para a ordem de $10^{200}$ em 500 vértices. Esse comportamento se deu por conta dos erros acumulados entre as iterações.
 	\\
 	
 	Uma proposta pensada para contornar essa situação infeliz foi alterar o valor de $\mathcal{P}$, deixando o menor, obrigando o algorítimo a calcular realizações utilizando vértices iniciais. Porém, isso implicaria em um grafo não completo, o que não condiz definição do Algorítimo~\ref{alg:realizacaoIterativa}.
 	
-	Outra solução proposta fora de utilizar sempre os primeiros vértices no lugar dos antecessores mais próximos. Isso significaria utilizar sempre os vértices âncoras para realizar os demais, semelhante com o que é feito no sistema GPS. Com isso, tivemos os resultados satisfatórios apresentados pela Figura~\ref{fig:triPri}. Perceba que mesmo com 500 vértices ainda obteve-se resultados com $MDE$ na ordem de $10^{-20}$.
+	Outra solução proposta fora de utilizar sempre os primeiros vértices no lugar dos antecessores mais próximos. Isso significaria utilizar sempre os vértices âncoras para realizar os demais, semelhante com o que é feito no sistema GPS. Com isso, tivemos os resultados satisfatórios apresentados pela Figura~\ref{fig:triPri}. Mesmo com 500 vértices ainda obteve-se resultados com $MDE$ na ordem de $10^{-20}$.
 	
 	\begin{figure}[H]
 		\begin{center}
@@ -355,7 +355,7 @@
 	
 	\newpage
 	\chapter{Considerações Finais}
-	Com isso, concluí-se o estudo sobre a Geometria de Distâncias aplicada ao problema de localização de sensores, tal qual teve como resultado um algorítimo que garante encontrar a solução do problema (se houver). .
+	Com isso, concluí-se o estudo sobre a Geometria de Distâncias aplicada ao problema de localização de sensores no contexto de robôs móveis, tal qual teve como resultado um algorítimo que garante encontrar a solução do problema (se houver).
 	\\
 	
 	Nos cabe, nesse momento, voltarmos atenção às propostas levantadas internamente no início do projeto e verificar se elas foram cumpridas. Seguem o conjunto de objetivos específicos desse projeto, munidos de breve conclusão:
@@ -370,7 +370,7 @@
 		
 		Além de estudar distribuições genéricas, como em \cite{eren2004rigidity}, desenvolve-se na Seção~\ref{sec:disc} o Algorítimo~\ref{alg:instancia}, que cria instâncias aleatórias com diferentes densidades de ligações.
 		
-		\item Verificar a solução do Discretizable Order Problem \cite{carlileGDandAplications} aplicado ao problema proposto e estudar o ordenamento de vértices que se adeque aos objetivos do trabalho:
+		\item Verificar a solução do Discretizable Vertex Order Problem \cite{carlileGDandAplications} aplicado ao problema proposto e estudar o ordenamento de vértices que se adeque aos objetivos do trabalho:
 		
 		Durante o desenvolvimento da Seção~\ref{sec:GD}, percebeu-se que uma ordem de discretização não seria necessária, visto que a definição do problema necessita de uma única solução \cite{libertiEDG}. Por conta disso, definiu-se a ordem de $K$-lateração, que garante a unicidade de solução.
 		
@@ -388,16 +388,21 @@
 		
 		\item Aplicar o algoritmo estudado em estruturas de pequena escala, como instâncias reais do problema:
 		
-		Não fora possível cumprir este último objetivo. Infelizmente, a manufatura de robôs móveis usando sensores de distância se demonstrou excessivamente custosa \cite{savvides2001dynamic, sensorsForMobileRobots}.
+		Não fora possível cumprir este último objetivo. Infelizmente, a manufatura de robôs móveis usando sensores de distância se demonstrou excessivamente custosa \cite{savvides2001dynamic}.
 		
 		Vale lembrar, porém, que a utilização de instâncias artificiais genéricas se mostrou de grande importância. Pode-se averiguar e discutir sobre diferentes geometrias, mesmo sem a prototipação de fato.
 		
-	\end{enumerate}
+	\end{enumerate} 
 	
 	Como experiências futuras, deseja-se estudar mais sobre a obtenção e tratamento de dados de distâncias, visto que esses possuem erros de medida \cite{sensorsForMobileRobots} (não levados em consideração nesse trabalho). Alguns trabalhos relacionados à Geometria de Distâncias aplicada ao caso intervalar são mostrados em \cite{wsnlSemidefinitePrograming}. Há curiosidade em ver como medida MDE se comporta para uma quantidade grande de vértices associados a erros de medida.
 	
-	Também deseja-se fazer estudos sobre geometrias mínimas para o problema, como feito em \cite{wsnlFewAnchors}. Deseja-se verificar um conjunto de condições que restringem o movimento de um robô móvel afim de garantir que este ainda possa ser localizado.
+	Também deseja-se fazer estudos sobre geometrias mínimas para o problema, como feito em \cite{wsnlFewAnchors}. É de grande interesse dos autores desse trabalho verificar um conjunto de condições que restringem o movimento de um robô móvel, afim de garantir que este ainda possa ser localizado.
+	\\
 	
+	Afim de validar os resultados práticos da participação desse trabalho de pesquisa, além de ter a oportunidade de compartilhar sua experiência com os colegas da área, o autor desse trabalho está inscrito para realizar uma apresentação oral no \textit{Encontro Regional de Matemática Aplicada e Computacional} (ERMAC) --- congresso que será sediado pela UFMS em setembro, em parceria com a SBMAC. Também planeja-se submeter um artigo para publicação em revista especializada de Iniciação Científica com os resultados obtidos neste trabalho.
+
+	Não menos importante, por fim, pretende-se participar de apresentações em seminários internos da UFSC, como o trigésimo Seminário de Iniciação Científica e Tecnológica da UFSC, contribuindo com a divulgação da área de pesquisa entre os colegas.
+
 	\newpage
 	\label{sec:ref}
 	\phantomsection
