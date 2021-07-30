@@ -36,6 +36,10 @@
 		%----------------------------------------------------------------------------------------
 		%	HEADING SECTIONS
 		%----------------------------------------------------------------------------------------
+		\begin{flushright}
+			\includegraphics[scale=0.35]{figures/cnpq-logo.png}	
+		\end{flushright}
+		\vspace{-2cm}
 		\begin{center}
 			\includegraphics[scale=0.22]{figures/logoufsc.jpg}
 		\end{center}
@@ -79,6 +83,25 @@
 		
 	\end{titlepage}
 	
+	\newpage
+	\pagenumbering{gobble}
+	\vspace*{\fill}
+	\begin{flushright}
+		Ao meu pai, \\por me apresentar \\à matemática.
+	\end{flushright}
+	
+	\newpage
+	\pagenumbering{roman}
+	
+	\chapter*{Agradecimentos}
+	
+	Sou grato por todo o apoio e ternura de minha melhor amiga e esposa, Denise. Obrigado por me acompanhar nos momentos conturbados do ano de desenvolvimento desse trabalho. Em especial, ano esse que compartilhamos os cuidados do primeiro ano de nosso primeiro filho, Gael. Obrigado, filho, por toda felicidade nos entregue e pela paciência nos momentos de trabalho do papai. 
+	\\
+	
+	Agradeço também ao meu amigo, professor e orientador Felipe, pela paciência, incentivo, confiança e por tantas horas cedidas em sua sala enquanto conversávamos sobre a ciência, a vida e tudo mais. Obrigado por toda a ajuda, por me apresentar à Geometria de Distâncias e por todas as xícaras de café.
+	\\
+	
+	Por fim, agradeço ao CNPq pela bolsa e por tanto proporcionar as condições para a pesquisa no país.
 	
 	\newpage
 	%\vspace{-1cm}
@@ -108,7 +131,7 @@
 	
 	
 	\newpage
-	\chapter{Introdução}
+	\chapter{Introdução}\pagenumbering{arabic}
 	
 	Percebe-se uma tendencia de mercado em se adotar sistemas autônomos móveis para realizar funções que dependem de um grande número de máquinas, como o controle do estoque em um armazém, um sistema de entrega ou o cultivo e tratamento de grandes áreas de plantio \cite{mobileRobotsCook}. O estudo da localização de robôs móveis é vasta na literatura \cite{eren2004rigidity, mobileRobotsTzafestas}, o que demonstra a importância deste tema. Qualquer solução de engenharia móvel, seja autônoma ou não, precisa definir uma forma de localizar seu objeto de estudo. Por conta disso, no decorrer desse texto, estuda-se algumas soluções envolvendo Geometria de Distâncias para a obtenção de localização.
 	\\
@@ -161,7 +184,7 @@
 	\end{center}
 	
 	\section{Exemplares utilizados}
-	Como entrada das simulações, implementou-se o Algorítimo~\ref{alg:instancia}, que gera um grafo $K$-laterativo com $n$ vértices de coordenadas aleatórias $x_i = (x_{i1},\dots,x_{iK})\in \mathbb{R}^K$ e provê um conjunto limitável de arestas. Esse limitação é definida pelo parâmetro $\mathcal{P} \in [0,1]$, como coeficiente de probabilidade de uma aresta ser ou não acessível entre dois vértices aleatório $v_i$ e $v_j$, com $i,j>K+1$ (garantindo que sempre haverá ao menos uma (K+1)-clique adjacente a todo vértice).
+	Para a entrada das simulações, implementou-se o Algorítimo~\ref{alg:instancia}, que gera um grafo $K$-laterativo com $n$ vértices de coordenadas aleatórias $x_i = (x_{i1},\dots,x_{iK})\in \mathbb{R}^K$ e provê um conjunto limitável de arestas. Esse limitação é definida pelo parâmetro $\mathcal{P} \in [0,1]$, como coeficiente de probabilidade de uma aresta ser ou não acessível entre dois vértices $v_i$ e $v_j$, com $i,j>K+1$ (garantindo que sempre haverá ao menos um (K+1)-clique adjacente a todo vértice).
 	\\
 	
 	\begin{algorithm}[H]
